@@ -47,7 +47,7 @@ class BankAccount01 {
 		try {
 			Thread.sleep(100); // Doing some processing...
 
-			synchronized (BankAccount01.class) {
+			synchronized(this) {
 				// Get the initial Balance
 				int initialBalance = getBalance();
 				Thread.sleep(100); // Doing some processing...
@@ -59,6 +59,7 @@ class BankAccount01 {
 				// Set the final balance
 				setBalance(finalBalance);
 			}
+			
 			Thread.sleep(100); // Doing some processing...
 
 		} catch (InterruptedException ex) {
