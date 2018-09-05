@@ -1,13 +1,13 @@
 package com.corejava.multithreading;
 
-public class CriticalSectionRaceCondition {
+public class SynchronizedBlockDemo {
 
 	public static void main(String[] args) {
 		// Creating the shared resource
-		BankAccount bankAccount = new BankAccount();
+		BankAccount01 bankAccount = new BankAccount01();
 
-		Depositor depostiorA = new Depositor(100, bankAccount);
-		Depositor depostiorB = new Depositor(200, bankAccount);
+		Depositor01 depostiorA = new Depositor01(100, bankAccount);
+		Depositor01 depostiorB = new Depositor01(200, bankAccount);
 
 		Thread threadA = new Thread(depostiorA, "Thread A");
 		Thread threadB = new Thread(depostiorB, "Thread B");
@@ -32,7 +32,7 @@ public class CriticalSectionRaceCondition {
 }
 
 // BankAccount is the shared resource
-class BankAccount {
+class BankAccount01 {
 	private int balance = 0;
 
 	public int getBalance() {
@@ -47,16 +47,18 @@ class BankAccount {
 		try {
 			Thread.sleep(100); // Doing some processing...
 
-			// Get the initial Balance
-			int initialBalance = getBalance();
-			Thread.sleep(100); // Doing some processing...
+			synchronized (BankAccount01.class) {
+				// Get the initial Balance
+				int initialBalance = getBalance();
+				Thread.sleep(100); // Doing some processing...
 
-			// Add the deposit amount to the initial balance
-			int finalBalance = initialBalance + amount;
-			Thread.sleep(100); // Doing some processing...
+				// Add the deposit amount to the initial balance
+				int finalBalance = initialBalance + amount;
+				Thread.sleep(100); // Doing some processing...
 
-			// Set the final balance
-			setBalance(finalBalance);
+				// Set the final balance
+				setBalance(finalBalance);
+			}
 			Thread.sleep(100); // Doing some processing...
 
 		} catch (InterruptedException ex) {
@@ -65,11 +67,11 @@ class BankAccount {
 	}
 }
 
-class Depositor implements Runnable {
+class Depositor01 implements Runnable {
 	private int amount;
-	private BankAccount bankAccount;
+	private BankAccount01 bankAccount;
 
-	public Depositor(int amount, BankAccount bankAccount) {
+	public Depositor01(int amount, BankAccount01 bankAccount) {
 		this.amount = amount;
 		this.bankAccount = bankAccount;
 	}
@@ -80,5 +82,4 @@ class Depositor implements Runnable {
 		bankAccount.deposit(amount);
 		System.out.println(Thread.currentThread().getName() + " is done executing and depositing.");
 	}
-
 }

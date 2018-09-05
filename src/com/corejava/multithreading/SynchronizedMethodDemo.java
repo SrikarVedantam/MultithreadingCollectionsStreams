@@ -1,13 +1,13 @@
 package com.corejava.multithreading;
 
-public class CriticalSectionRaceCondition {
+public class SynchronizedMethodDemo {
 
 	public static void main(String[] args) {
 		// Creating the shared resource
-		BankAccount bankAccount = new BankAccount();
+		BankAccount02 bankAccount = new BankAccount02();
 
-		Depositor depostiorA = new Depositor(100, bankAccount);
-		Depositor depostiorB = new Depositor(200, bankAccount);
+		Depositor02 depostiorA = new Depositor02(100, bankAccount);
+		Depositor02 depostiorB = new Depositor02(200, bankAccount);
 
 		Thread threadA = new Thread(depostiorA, "Thread A");
 		Thread threadB = new Thread(depostiorB, "Thread B");
@@ -32,7 +32,7 @@ public class CriticalSectionRaceCondition {
 }
 
 // BankAccount is the shared resource
-class BankAccount {
+class BankAccount02 {
 	private int balance = 0;
 
 	public int getBalance() {
@@ -43,7 +43,7 @@ class BankAccount {
 		this.balance = balance;
 	}
 
-	public void deposit(int amount) {
+	synchronized public void deposit(int amount) {
 		try {
 			Thread.sleep(100); // Doing some processing...
 
@@ -65,11 +65,11 @@ class BankAccount {
 	}
 }
 
-class Depositor implements Runnable {
+class Depositor02 implements Runnable {
 	private int amount;
-	private BankAccount bankAccount;
+	private BankAccount02 bankAccount;
 
-	public Depositor(int amount, BankAccount bankAccount) {
+	public Depositor02(int amount, BankAccount02 bankAccount) {
 		this.amount = amount;
 		this.bankAccount = bankAccount;
 	}
