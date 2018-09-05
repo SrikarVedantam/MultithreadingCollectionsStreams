@@ -1,13 +1,15 @@
 package com.corejava.multithreading;
 
-public class SynchronizedMethodDemo {
+import java.util.concurrent.locks.ReentrantLock;
+
+public class ReentrantLockDemo {
 
 	public static void main(String[] args) {
 		// Creating the shared resource
-		BankAccount02 bankAccount = new BankAccount02();
+		BankAccount03 bankAccount = new BankAccount03();
 
-		Depositor02 depostiorA = new Depositor02(100, bankAccount);
-		Depositor02 depostiorB = new Depositor02(200, bankAccount);
+		Depositor03 depostiorA = new Depositor03(100, bankAccount);
+		Depositor03 depostiorB = new Depositor03(200, bankAccount);
 
 		Thread threadA = new Thread(depostiorA, "Thread A");
 		Thread threadB = new Thread(depostiorB, "Thread B");
@@ -32,8 +34,9 @@ public class SynchronizedMethodDemo {
 }
 
 // BankAccount is the shared resource
-class BankAccount02 {
+class BankAccount03 {
 	private int balance = 0;
+	ReentrantLock depositLock = new ReentrantLock();
 
 	public int getBalance() {
 		return balance;
@@ -43,10 +46,11 @@ class BankAccount02 {
 		this.balance = balance;
 	}
 
-	public synchronized void deposit(int amount) {
+	public void deposit(int amount) {
+		depositLock.lock();
 		try {
 			Thread.sleep(100); // Doing some processing...
-
+			
 			// Get the initial Balance
 			int initialBalance = getBalance();
 			Thread.sleep(100); // Doing some processing...
@@ -62,14 +66,17 @@ class BankAccount02 {
 		} catch (InterruptedException ex) {
 			System.err.println("Thread '" + Thread.currentThread().getName() + "' is interrupted!");
 		}
+		finally {
+			depositLock.unlock();
+		}
 	}
 }
 
-class Depositor02 implements Runnable {
+class Depositor03 implements Runnable {
 	private int amount;
-	private BankAccount02 bankAccount;
+	private BankAccount03 bankAccount;
 
-	public Depositor02(int amount, BankAccount02 bankAccount) {
+	public Depositor03(int amount, BankAccount03 bankAccount) {
 		this.amount = amount;
 		this.bankAccount = bankAccount;
 	}
@@ -82,3 +89,4 @@ class Depositor02 implements Runnable {
 	}
 
 }
+

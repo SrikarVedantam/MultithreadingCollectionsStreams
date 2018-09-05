@@ -1,6 +1,6 @@
 package com.corejava.multithreading;
 
-public class CriticalSectionRaceCondition {
+public class RaceConditionDemo {
 
 	public static void main(String[] args) {
 		// Creating the shared resource
