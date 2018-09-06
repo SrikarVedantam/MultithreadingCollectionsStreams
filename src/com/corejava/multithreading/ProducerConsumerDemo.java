@@ -8,12 +8,16 @@ public class ProducerConsumerDemo {
 		System.out.println("Main thread begins the execution...");
 
 		Buffer01 buffer = new Buffer01();
+		
+		// Create threads
 		Thread producer = new Thread(new Producer01(buffer), "Producer");
 		Thread consumer = new Thread(new Consumer01(buffer), "Consumer");
 
+		// Start the threads
 		producer.start();
 		consumer.start();
 
+		// Wait for the child threads to join the parent thread
 		try {
 			producer.join();
 			consumer.join();

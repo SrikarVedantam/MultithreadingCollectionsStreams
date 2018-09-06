@@ -10,12 +10,15 @@ public class ProducerConsumerWithLockDemo {
 		ReentrantLock lock = new ReentrantLock();
 		Buffer buffer = new Buffer();
 		
+		// Create threads
 		Thread producer = new Thread(new Producer(lock, buffer), "Producer");
 		Thread consumer = new Thread(new Consumer(lock, buffer), "Consumer");
 
+		// Start the threads
 		producer.start();
 		consumer.start();
 		
+		// Wait for the child threads to join the parent thread
 		try {
 			producer.join();
 			consumer.join();
