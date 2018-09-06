@@ -5,6 +5,7 @@ import java.util.concurrent.locks.ReentrantLock;
 
 public class ProducerConsumerWithLockDemo {
 	public static void main(String[] args) {
+		System.out.println("Main thread begins the execution...");
 
 		ReentrantLock lock = new ReentrantLock();
 		Buffer buffer = new Buffer();
@@ -14,6 +15,16 @@ public class ProducerConsumerWithLockDemo {
 
 		producer.start();
 		consumer.start();
+		
+		try {
+			producer.join();
+			consumer.join();
+		}
+		catch(InterruptedException ex) {
+			ex.printStackTrace();
+		}
+		
+		System.out.println("Main thread done with the execution.");
 	}
 }
 
