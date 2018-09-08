@@ -1,6 +1,6 @@
 package com.corejava.collections;
 
-import java.util.Stack;
+import java.util.ArrayDeque;
 
 public class BalancedStringChecker {
 	public static void main(String[] args) {
@@ -13,8 +13,9 @@ public class BalancedStringChecker {
 
 	private static boolean isBalanced(String input) {
 		boolean result = true;
-
-		Stack<Character> stack = new Stack<>();
+		
+		// Use 'ArrayDeque<>' rather than 'Stack<>' class in Java
+		ArrayDeque<Character> stack = new ArrayDeque<>();
 		for (int i = 0; i < input.length(); i++) {
 			char ch = input.charAt(i);
 			// Just push all the opening braces
