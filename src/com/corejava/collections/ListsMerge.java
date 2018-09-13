@@ -35,7 +35,6 @@ public class ListsMerge {
 			while(i < list1.size()) {
 				resultList.add(list1.get(i++));
 			}
-
 		}
 		return resultList;
 	}
