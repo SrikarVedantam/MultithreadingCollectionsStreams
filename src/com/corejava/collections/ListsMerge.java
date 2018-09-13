@@ -15,7 +15,7 @@ public class ListsMerge {
 		System.out.println("Result List: " + resultList);
 	}
 
-	private static <T extends Comparable> List<T> mergeLists(List<T> list1, List<T> list2){
+	private static <T extends Comparable<T>> List<T> mergeLists(List<T> list1, List<T> list2){
 		List<T> resultList = new ArrayList<T>(list1.size() + list2.size());
 		int i = 0, j = 0;
 		while(i < list1.size() && j < list2.size()) {

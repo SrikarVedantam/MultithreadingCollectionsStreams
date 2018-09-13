@@ -20,6 +20,7 @@ public class UniquePairs {
 			pair_left[i] = s.next();
 			pair_right[i] = s.next();
 		}
+		s.close();
 
 		Set<String> set = new HashSet<>();
 		for (int i = 0; i < t; i++) {
